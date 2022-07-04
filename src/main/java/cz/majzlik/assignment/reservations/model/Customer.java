@@ -1,10 +1,10 @@
 package cz.majzlik.assignment.reservations.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Class that represents customer of the tennis club
@@ -12,16 +12,15 @@ import javax.persistence.Id;
  * @author Adam Majzlik
  */
 @Entity
+@Table
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
     private String phoneNumber;
 
-    @Column
     private String name;
 
     public Customer(String phoneNumber, String name) {

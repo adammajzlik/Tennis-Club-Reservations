@@ -1,12 +1,12 @@
 package cz.majzlik.assignment.reservations.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Class that represents tennis court
@@ -14,16 +14,15 @@ import javax.persistence.Id;
  * @author Adam Majzlik
  */
 @Entity
+@Table
 public class Court {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private int number;
 
-    @Column
     @Enumerated(EnumType.STRING)
     private Surface surface;
 
