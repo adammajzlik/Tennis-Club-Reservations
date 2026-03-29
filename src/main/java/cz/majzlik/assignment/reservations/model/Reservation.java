@@ -1,15 +1,9 @@
 package cz.majzlik.assignment.reservations.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import cz.majzlik.assignment.reservations.converter.LocalDateConverter;
-import cz.majzlik.assignment.reservations.converter.LocalTimeConverter;
-import cz.majzlik.assignment.reservations.deserializer.ReservationDateDeserializer;
-import cz.majzlik.assignment.reservations.deserializer.ReservationGameTypeDeserializer;
-import cz.majzlik.assignment.reservations.deserializer.ReservationTimeDeserializer;
 import cz.majzlik.assignment.reservations.exception.InvalidReservationException;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -35,17 +29,13 @@ public class Reservation implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
-    @JsonDeserialize(using = ReservationDateDeserializer.class)
-    @Convert(converter = LocalDateConverter.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate date;
 
+    @Schema(example = "14:30", type = "string", pattern = "HH:mm")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-    @JsonDeserialize(using = ReservationTimeDeserializer.class)
-    @Convert(converter = LocalTimeConverter.class)
     private LocalTime time;
 
-    @JsonDeserialize(using = ReservationGameTypeDeserializer.class)
     @Enumerated(EnumType.STRING)
     private GameType gameType;
 
@@ -64,7 +54,7 @@ public class Reservation implements Serializable {
      */
     public void validate() {
         if (!phoneNumber.matches(PHONE_NUMBER_FORMAT)) {
-            throw new InvalidReservationException("Phone number has an invalid format.");
+            throw new InvalidReservationException("Phone number has an invalid format. It must start with '+'.");
         }
         if (name.isEmpty()) {
             throw new InvalidReservationException("Name must be filled.");
@@ -125,7 +115,7 @@ public class Reservation implements Serializable {
             throw new InvalidReservationException("Reservation can must be in half a hour intervals.");
         }
         if (this.courtNumber < 1 || this.courtNumber > Club.getNumOfCourts()) {
-            throw new InvalidReservationException("Reservation has an invalid court number.");
+            throw new InvalidReservationException("Reservation has an invalid court number. It must be number 1 or 2.");
         }
         if (this.date.isBefore(LocalDate.now())) {
             throw new InvalidReservationException("Reservation can not be created for the past.");

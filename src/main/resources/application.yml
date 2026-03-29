@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    # Change 'mem' to 'file' and provide a path
+    url: jdbc:h2:file:./data/tennisClub
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+
+  jpa:
+    hibernate:
+      # 'update' is correct for persisting data
+      ddl-auto: update
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+# Swagger / OpenAPI Configuration
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs

@@ -79,8 +79,7 @@ public class ReservationController {
     public double createReservation(@RequestBody Reservation reservation) {
         reservation.validate();
 
-        String dateFormatted = reservation.getDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        List<Reservation> reservations = reservationRepository.getReservationsByDateAndCourt(dateFormatted, reservation.getCourtNumber());
+        List<Reservation> reservations = reservationRepository.getReservationsByDateAndCourt(reservation.getDate().toString(), reservation.getCourtNumber());
 
         reservation.checkReservationConditions();
         reservation.checkColliding(reservations);

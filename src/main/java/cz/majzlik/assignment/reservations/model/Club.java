@@ -11,7 +11,7 @@ public class Club {
 
     private static final LocalTime closingTime = LocalTime.of(23, 0);
     private static final LocalTime openingTime = LocalTime.of(7, 0);
-    private static int numOfCourts = 0;
+    private static int numOfCourts = 2;
 
     public static LocalTime getClosingTime() {
         return closingTime;
